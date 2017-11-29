@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="view_bank_statement_form_inherit">
+            <field name="name">account.bank.statement.form</field>
+            <field name="model">account.bank.statement</field>
+            <field name="inherit_id" ref="account.view_bank_statement_form"/>
+            <field name="arch" type="xml">
+                <field name="account_id" position="before">
+                    <field name="cuenta_origen" attrs="{'readonly': [('type','!=','traspaso')]}"/>
+                    <field name="cuenta_destino" attrs="{'readonly': [('type','!=','traspaso')]}"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</openerp>

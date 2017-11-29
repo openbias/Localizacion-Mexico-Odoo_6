@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <record id="view_company_cfdi_form" model="ir.ui.view">
+            <field name="name">view.company.cfdi.form</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="Info SAT" name="cfd">
+                        <group colspan="4">
+                            <group string="Timbrar" colspan="2">
+                                <field name="cfd_mx_test" colspan="4" />
+                                <field name="cfd_mx_pac" colspan="4" />
+                                <field name="cfd_mx_version" colspan="4" />
+                                <field name="cfd_mx_host" colspan="4" />
+                                <field name="cfd_mx_db" colspan="4" />
+                            </group>
+                            <group string="General" name="cfdi_general" colspan="2">
+                            </group>
+                        </group>
+                        <group string="Diarios" colspan="4">
+                            <field name="cfd_mx_journal_ids" colspan="4" nolabel="1" />
+                        </group>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="view_res_company_form_cfdi">
+            <field name="name">view_res_company_form_cfdi</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="bias_electronic_invoice_v6.view_res_company_form_inherit"/>
+            <field name="arch" type="xml">
+                <page position="replace" string="Electronic Invoice"></page>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_res_company_form_mysuite_cfdi">
+            <field name="name">view_res_company_form_mysuite_cfdi</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="bias_electronic_invoice_v6.view_res_company_form_inherit_mysuite"/>
+            <field name="arch" type="xml">
+                <page position="replace" string="My Suite"></page>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_res_company_form_tralix_cfdi">
+            <field name="name">view_res_company_form_tralix_cfdi</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="bias_electronic_invoice_v6.view_res_company_form_inherit_tralix"/>
+            <field name="arch" type="xml">
+                <page position="replace" string="Tralix"></page>
+            </field>
+        </record>
+
+
+    </data>
+</openerp>

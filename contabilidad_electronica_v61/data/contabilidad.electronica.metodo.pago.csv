@@ -1,0 +1,20 @@
+id,code,name
+metodo_pago_1,01,Efectivo
+metodo_pago_2,02,Cheque
+metodo_pago_3,03,Transferencia
+metodo_pago_4,04,Tarjetas de crédito
+metodo_pago_5,05,Monederos electrónicos
+metodo_pago_6,06,Dinero electrónico
+metodo_pago_7,07,Tarjetas digitales
+metodo_pago_8,08,Vales de despensa
+metodo_pago_9,09,Bienes
+metodo_pago_10,10,Servicio
+metodo_pago_11,11,Por cuenta de tercero
+metodo_pago_12,12,Dación en pago
+metodo_pago_13,13,Pago por subrogación
+metodo_pago_14,14,Pago por consignación
+metodo_pago_15,15,Condonación
+metodo_pago_16,16,Cancelación
+metodo_pago_17,17,Compensación
+metodo_pago_98,98,"NA"
+metodo_pago_99,99,Otros

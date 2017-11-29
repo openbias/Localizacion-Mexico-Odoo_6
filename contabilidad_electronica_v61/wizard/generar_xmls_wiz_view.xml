@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+
+        <record model="ir.ui.view" id="wizard_generar_xmls_polizas_view_tree">
+            <field name="name">wizard.generar.xmls.poliza.view.tree</field>
+            <field name="model">cont_elect_wizard_poliza_line</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Generar XMLs">
+                    <field name="move_id"/>
+                    <field name="date"/>
+                    <field name="partner_id"/>
+                    <field name="journal_id"/>
+                    <field name="tipo_poliza"/>
+                </tree>
+            </field>
+        </record>
+        <record id="action_generar_xmls_poliza" model="ir.actions.act_window">
+            <field name="name">Generar XMLs Anexo 24</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cont_elect_wizard_poliza_line</field>
+            <field name="view_type">tree</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="wizard_generar_xmls_polizas_view_tree"/>
+            <field name="target">new</field>
+        </record>
+
+        <record model="ir.ui.view" id="wizard_generar_xmls_balanza_view_tree">
+            <field name="name">wizard.generar.xmls.balanza.view.tree</field>
+            <field name="model">cont_elect_wizard_balanza_line</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Generar XMLs">
+                    <field name="account_id"/>
+                    <field name="codigo"/>
+                    <field name="saldo_inicial"/>
+                    <field name="debe"/>
+                    <field name="haber"/>
+                    <field name="saldo_final"/>
+                </tree>
+            </field>
+        </record>
+        <record id="action_generar_xmls_balanza" model="ir.actions.act_window">
+            <field name="name">Generar XMLs Anexo 24</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cont_elect_wizard_balanza_line</field>
+            <field name="view_type">tree</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="wizard_generar_xmls_balanza_view_tree"/>
+            <field name="target">new</field>
+        </record>
+
+        <record model="ir.ui.view" id="wizard_generar_xmls_view_form">
+            <field name="name">wizard.generar.xmls.view.form</field>
+            <field name="model">cont_elect_wizard_generar_xmls</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Generar XMLs">
+                    <group colspan="4">
+                        <field name="chart_account_id" on_change="onchange_chart_id(chart_account_id)" colspan="4" />
+                        <field name="company_id" invisible="1" colspan="4" />
+                        <field name="mes" colspan="4"/>
+                        <field name="limite_nivel" colspan="4" />
+                        <field name="solo_con_codigo" colspan="4" />
+                    </group>
+                    <newline />
+                    <notebook colspan="4">
+                        <page string="Catalogo">
+                            <button type="object" name="action_xml_catalogo" string="XML Catalogo" icon="gtk-execute"/>
+                        </page>
+                        <page string="Balanza">
+                            <group colspan="4" col="4">
+                                <field name="tipo_envio" colspan="4"/>
+                                <field name="fecha_mod_bal" colspan="4"
+                                    attrs="{'invisible': [('tipo_envio','=','N')], 'required': [('tipo_envio','=','C')]}"/>
+                            </group>
+                            <group colspan="4" col="2">
+                                <button type="object" name="action_previsualizar_balanza" string="Previsualizar Balanza" icon="gtk-ok"/>
+                                <button type="object" name="action_xml_balanza" string="XML Balanza" icon="gtk-execute"/>
+                            </group>
+                        </page>
+                        <page string="Polizas">
+                            <group colspan="4" >
+                                <field name="tipo_solicitud" colspan="4" />
+                                <field name="num_orden" 
+                                    attrs="{'invisible': [('tipo_solicitud','not in',('AF','FC'))], 
+                                      'required': [('tipo_solicitud','in',('AF','FC'))]}"
+                                      colspan="4"/>
+                                <field name="num_tramite"
+                                    attrs="{'invisible': [('tipo_solicitud','not in',('DE','CO'))], 
+                                      'required': [('tipo_solicitud','in',('DE','CO'))]}"
+                                      colspan="4" />
+                            </group>
+                            <newline />
+                            <button type="object" name="action_previsualizar_polizas" string="Previsualizar Polizas" icon="gtk-ok"/>                    
+                            <button type="object" name="action_xml_polizas" string="XML Polizas" icon="gtk-execute"/>                            
+                        </page>
+                        <page string="Auxiliares">
+                            <button type="object" name="action_xml_aux_folios" string="Folios" icon="gtk-execute"/>
+                            <button type="object" name="action_xml_aux_cuentas" string="Cuentas" icon="gtk-execute"/>
+                        </page>
+                        <page string="Mensajes Validacion">
+                            <group colspan="4" >
+                                <field name="message" colspan="4" nolabel="1" readonly="1" />
+                            </group>
+                        </page>
+                    </notebook>
+                    <field name="show_balanza" invisible="1" colspan="4" />
+                    <field name="show_polizas" invisible="1" colspan="4"/>
+                    <group colspan="2" col="2" name="xml">
+                        <separator string="Guardar Archivos XML" colspan="2"/>
+                        <field name="fname" invisible="1" colspan="2"/>
+                        <field name="xml" nolabel="1" readonly="1" filename="fname" colspan="2"/>
+                    </group>                    
+                    <group colspan="2" col="2" name="csv">
+                        <separator string="Guardar Archivos CSV" colspan="2"/>
+                        <field name="fname_csv" invisible="1" colspan="2"/>
+                        <field name="csv" nolabel="1" readonly="1" filename="fname_csv" colspan="2"/>
+                    </group>
+                    <newline />
+                    <group colspan="4">
+                        <button name="validar_contabilidad_electronica" string="Abrir Validador XML SAT (Web)" type="object" icon="gtk-zoom-in" colspan="2" />
+                        <button type="special" special="cancel" string="Cerrar" icon="gtk-cancel" colspan="2" />
+                    </group>
+                    <newline />
+                </form>
+            </field>
+        </record>
+
+        <record id="action_generar_xmls" model="ir.actions.act_window">
+            <field name="name">Generar XMLs Anexo 24</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cont_elect_wizard_generar_xmls</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_generar_xmls_view_form"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem 
+            id="menu_contabilidad_electronica_reports" 
+            parent="account.menu_finance_reporting"
+            name="Contabilidad electronica SAT"/>
+
+        <menuitem 
+            id="menu_generar_xmls" 
+            parent="menu_contabilidad_electronica_reports"
+            action="action_generar_xmls"
+            name="Generar XMLs Anexo 24"/>
+
+
+
+
+
+    </data>
+</openerp>

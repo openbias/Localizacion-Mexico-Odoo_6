@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="view_partner_cfdi_categ_form">
+            <field name="name">view_partner_cfdi_categ_form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <notebook position="inside">
+                        <page string="Info SAT">
+                            <group colspan="4">
+                                <group colspan="2">
+                                    <field name="regimen_id" colspan="4"/>
+                                    <field name="usocfdi_id" colspan="4"/>
+                                    <field name="formapago_id" colspan="4"/>
+                                    <field name="metodopago_id" colspan="4"/>
+                                </group>
+                                <group colspan="2">
+                                    <field name="es_personafisica" colspan="4"/>
+                                    <field name="es_extranjero" colspan="4"/>
+                                    <field name="identidad_fiscal" string="Identidad Fiscal" groups="cfd_mx.group_cfd_mx_manager" colspan="4"/>
+                                    <field name="curp" colspan="4"/>
+                                    <field name="xml_cfdi_sinacento" colspan="4"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </data>
+            </field>
+        </record>
+
+        <record id="view_partner_form_inherit2" model="ir.ui.view">
+            <field name="name">view.partner.form.inherit2</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <field name="street" position="after">
+                    <field name="noExterior" />
+                    <field name="noInterior" />
+                </field>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="view_partner_form_cfdi">
+            <field name="name">view_partner_form_cfdi</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="bias_electronic_invoice_v6.view_partner_form_inherit"/>
+            <field name="arch" type="xml">
+                <page position="replace" string="Electronic Invoice"></page>
+            </field>
+        </record>
+
+
+    </data>
+</openerp>

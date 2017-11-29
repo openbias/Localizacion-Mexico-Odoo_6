@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+
+        <record id="view_account_invoice_refund_cfdi" model="ir.ui.view">
+            <field name="name">account.invoice.refund.cfdi.form</field>
+            <field name="model">account.invoice.refund</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="account.view_account_invoice_refund"/>
+            <field name="arch" type="xml">
+                <field name="filter_refund" position="after">
+                    <field name="tiporelacion_id"/>
+                </field>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="invoice_cfdi_form">
+            <field name="name">invoice_cfdi_form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <field name="move_id" position="after">
+                    <field name="formapago_id"/>
+                    <field name="metodopago_id" />
+                    <field name="pay_account" />
+                    <field name="usocfdi_id" />
+                    <!-- <field name="tipo_cambio" readonly="1" /> -->
+
+                    <field name="date_invoice_cfdi" invisible="1" />
+                    <field name="es_cfdi" invisible="1"/>
+                    <field name="timbrada" invisible="1"/>
+                    <field name="mandada_cancelar" invisible="1"/>
+                    <!-- <field name="pagos" invisible="1"/> -->
+                    <field name="tipo_comprobante" invisible="1" />
+                </field>
+                <xpath expr="/form/notebook/page[@string='Payments']" position="after">
+                    <page string="Info SAT">
+                        <group>
+                            <group colspan="4">
+                                <field name="tiporelacion_id" />
+                                <field name="uuid_relacionado_id" />
+                            </group>
+                        </group>
+                        <group name="timbre_cfdi" attrs="{'invisible': [('timbrada', '=', False)]}" colspan="4">
+                            <separator string="Timbre Fiscal" colspan="4" />
+                            <field name="test" readonly="1"/>
+                            <field name="uuid" readonly="1"/>
+                            <field name="fecha_timbrado" readonly="1"/>
+                        </group>
+                        <group colspan="4">
+                            <separator string="Cadena SAT" colspan="4" />
+                            <field name="cadena" readonly="1" nolabel="1" colspan="4" />
+                        </group>
+<!--                         <group colspan="4">
+                            <separator string="Sello SAT" colspan="4" />
+                            <field name="sello_sat" readonly="1" nolabel="1" colspan="4" />
+                        </group> -->
+                        <group colspan="4" col="8">
+                            <separator string="Certificado" colspan="4" />
+                            <separator string="Certificado SAT" colspan="4" />
+                            <field name="certificate" readonly="1" nolabel="1" colspan="4" />
+                            <field name="certificado_sat" readonly="1" nolabel="1" colspan="4" />
+                        </group>
+
+                    </page>
+                </xpath>
+
+            </field>
+        </record>
+
+
+
+        <!-- Electronic Invoice -->
+        <record id="view_account_invoice_repl" model="ir.ui.view">
+            <field name="name">view_account_invoice_repl</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="bias_electronic_invoice_v6.view_account_invoice_inherit"/>
+            <field name="arch" type="xml">
+                <field name="pay_method" position="replace"></field>
+                <field name="pay_account" position="replace"></field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="invoice_client_repl">
+            <field name="name">invoice_client_repl</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="bias_electronic_invoice_v6.invoice_client_form"/>
+            <field name="arch" type="xml">
+                <page string="Electronic Invoice" position="replace"></page>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="invoice_supl_repl">
+            <field name="name">invoice_supl_repl</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="bias_electronic_invoice_v6.invoice_form"/>
+            <field name="arch" type="xml">
+                <page string="Electronic Invoice" position="replace"></page>
+            </field>
+        </record>
+
+    </data>
+</openerp>

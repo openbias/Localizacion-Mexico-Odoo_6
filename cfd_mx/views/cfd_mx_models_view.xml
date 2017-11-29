@@ -1,0 +1,420 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <!-- Menú configuración -->
+        <menuitem 
+            id="menu_cfd_mx" 
+            name="Localización Mexico"
+            parent="account.menu_finance_configuration"/>
+
+
+        <!-- CATALOGO TIPORELACION -->
+        <record id="tiporelacion_view_form" model="ir.ui.view">
+            <field name="name">tiporelacion_view_form</field>
+            <field name="model">cfd_mx.tiporelacion</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Catálogo Tipo Relacion">
+                    <group colspan="4">
+                        <field name="clave"/>
+                        <field name="name"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record id="tiporelacion_view_tree" model="ir.ui.view">
+            <field name="name">tiporelacion_view_tree</field>
+            <field name="model">cfd_mx.tiporelacion</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Catálogo Tipo Relacion">
+                    <field name="clave"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="tiporelacion_view_filter" model="ir.ui.view">
+            <field name="name">tiporelacion_view.search</field>
+            <field name="model">cfd_mx.tiporelacion</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Catálogo Tipo Relacion">
+                    <group>
+                        <field name="name" string="Name" filter_domain="['|',('clave','ilike',self),('name','ilike',self)]"/>
+                        <field name="clave"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="action_tiporelacion" model="ir.actions.act_window">
+            <field name="name">Catálogo Tipo Relacion</field>
+            <field name="res_model">cfd_mx.tiporelacion</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem
+            action="action_tiporelacion" 
+            parent="menu_cfd_mx"
+            id="menu_tiporelacion"
+            sequence="100" />
+
+
+        <!-- CATALOGO USOCFDI -->
+        <record id="usocfdi_view_form" model="ir.ui.view">
+            <field name="name">usocfdi_view_form</field>
+            <field name="model">cfd_mx.usocfdi</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Catálogo Uso CFDI">
+                    <group colspan="4">
+                        <field name="clave"/>
+                        <field name="name"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record id="usocfdi_view_tree" model="ir.ui.view">
+            <field name="name">usocfdi_view_tree</field>
+            <field name="model">cfd_mx.usocfdi</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Catálogo Uso CFDI">
+                    <field name="clave"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="usocfdi_view_filter" model="ir.ui.view">
+            <field name="name">usocfdi_view.search</field>
+            <field name="model">cfd_mx.usocfdi</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Catálogo Uso CFDI">
+                    <group>
+                        <field name="name" string="Name" filter_domain="['|',('clave','ilike',self),('name','ilike',self)]"/>
+                        <field name="clave"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="action_usocfdi" model="ir.actions.act_window">
+            <field name="name">Catálogo Uso CFDI</field>
+            <field name="res_model">cfd_mx.usocfdi</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem
+            action="action_usocfdi" 
+            parent="menu_cfd_mx"
+            id="menu_usocfdi"
+            sequence="100" />
+
+
+        <!-- CATALOGO PRODUCTOSSERVICIOS -->
+        <record id="prodserv_view_form" model="ir.ui.view">
+            <field name="name">prodserv_view_form</field>
+            <field name="model">cfd_mx.prodserv</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Catálogo Productos / Servicios">
+                    <group colspan="4">
+                        <field name="clave"/>
+                        <field name="name"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record id="prodserv_view_tree" model="ir.ui.view">
+            <field name="name">prodserv_view_tree</field>
+            <field name="model">cfd_mx.prodserv</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Catálogo Productos / Servicios">
+                    <field name="clave"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="prodserv_view_filter" model="ir.ui.view">
+            <field name="name">prodserv_view.search</field>
+            <field name="model">cfd_mx.prodserv</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Catálogo Productos / Servicios">
+                    <group>
+                        <field name="name" string="Name" filter_domain="['|',('clave','ilike',self),('name','ilike',self)]"/>
+                        <field name="clave"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="action_prodserv" model="ir.actions.act_window">
+            <field name="name">Catálogo Productos / Servicios</field>
+            <field name="res_model">cfd_mx.prodserv</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem
+            action="action_prodserv" 
+            parent="menu_cfd_mx"
+            id="menu_prodserv"
+            sequence="100" />
+
+        <!-- CATALOGO UNIDADESMEDIDA -->
+        <record id="unidadesmedida_view_form" model="ir.ui.view">
+            <field name="name">unidadesmedida_view_form</field>
+            <field name="model">cfd_mx.unidadesmedida</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Catálogo Unidades Medida">
+                    <group colspan="4">
+                        <field name="clave"/>
+                        <field name="name"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record id="unidadesmedida_view_tree" model="ir.ui.view">
+            <field name="name">unidadesmedida_view_tree</field>
+            <field name="model">cfd_mx.unidadesmedida</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Catálogo Unidades Medida">
+                    <field name="clave"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="unidadesmedida_view_filter" model="ir.ui.view">
+            <field name="name">unidadesmedida_view.search</field>
+            <field name="model">cfd_mx.unidadesmedida</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Catálogo Unidades Medida">
+                    <group>
+                        <field name="name" string="Name" filter_domain="['|',('clave','ilike',self),('name','ilike',self)]"/>
+                        <field name="clave"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="action_unidadesmedida" model="ir.actions.act_window">
+            <field name="name">Catálogo Unidades Medida</field>
+            <field name="res_model">cfd_mx.unidadesmedida</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem
+            action="action_unidadesmedida" 
+            parent="menu_cfd_mx"
+            id="menu_unidadesmedida"
+            sequence="100" />
+
+        <!-- CATALOGO FORMAPAGO -->
+        <record id="formapago_view_form" model="ir.ui.view">
+            <field name="name">formapago_view_form</field>
+            <field name="model">cfd_mx.formapago</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Catálogo Forma Pago">
+                    <group colspan="4">
+                        <field name="clave"/>
+                        <field name="name"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record id="formapago_view_tree" model="ir.ui.view">
+            <field name="name">formapago_view_tree</field>
+            <field name="model">cfd_mx.formapago</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Catálogo Forma Pago">
+                    <field name="clave"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="formapago_view_filter" model="ir.ui.view">
+            <field name="name">formapago_view.search</field>
+            <field name="model">cfd_mx.formapago</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Catálogo Forma Pago">
+                    <group>
+                        <field name="name" string="Name" filter_domain="['|',('clave','ilike',self),('name','ilike',self)]"/>
+                        <field name="clave"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="action_formapago" model="ir.actions.act_window">
+            <field name="name">Catálogo Forma Pago</field>
+            <field name="res_model">cfd_mx.formapago</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem
+            action="action_formapago" 
+            parent="menu_cfd_mx"
+            id="menu_formapago"
+            sequence="100" />
+
+
+        <!-- CATALOGO METODOPAGO -->
+        <record id="metodopago_view_form" model="ir.ui.view">
+            <field name="name">metodopago_view_form</field>
+            <field name="model">cfd_mx.metodopago</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Catálogo Metodo Pago">
+                    <group colspan="4">
+                        <field name="clave"/>
+                        <field name="name"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record id="metodopago_view_tree" model="ir.ui.view">
+            <field name="name">metodopago_view_tree</field>
+            <field name="model">cfd_mx.metodopago</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Catálogo Metodo Pago">
+                    <field name="clave"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="metodopago_view_filter" model="ir.ui.view">
+            <field name="name">metodopago_view.search</field>
+            <field name="model">cfd_mx.metodopago</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Catálogo Metodo Pago">
+                    <group>
+                        <field name="name" string="Name" filter_domain="['|',('clave','ilike',self),('name','ilike',self)]"/>
+                        <field name="clave"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="action_metodopago" model="ir.actions.act_window">
+            <field name="name">Catálogo Metodo Pago</field>
+            <field name="res_model">cfd_mx.metodopago</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem
+            action="action_metodopago" 
+            parent="menu_cfd_mx"
+            id="menu_metodopago"
+            sequence="100" />
+
+        <!-- CATALOGO REGIMEN -->
+        <record id="regimen_view_form" model="ir.ui.view">
+            <field name="name">regimen_view_form</field>
+            <field name="model">cfd_mx.regimen</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Catálogo Regimen">
+                    <group colspan="4">
+                        <field name="clave"/>
+                        <field name="name"/>
+                        <field name="persona_fisica"/>
+                        <field name="persona_moral"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record id="regimen_view_tree" model="ir.ui.view">
+            <field name="name">regimen_view_tree</field>
+            <field name="model">cfd_mx.regimen</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Catálogo Regimen">
+                    <field name="clave"/>
+                    <field name="name"/>
+                    <field name="persona_fisica"/>
+                    <field name="persona_moral"/>
+                </tree>
+            </field>
+        </record>
+        <record id="regimen_view_filter" model="ir.ui.view">
+            <field name="name">regimen_view.search</field>
+            <field name="model">cfd_mx.regimen</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Catálogo Regimen">
+                    <group>
+                        <field name="name" string="Name" filter_domain="['|',('clave','ilike',self),('name','ilike',self)]"/>
+                        <field name="clave"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="action_regimen" model="ir.actions.act_window">
+            <field name="name">Catálogo Regimen</field>
+            <field name="res_model">cfd_mx.regimen</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem
+            action="action_regimen" 
+            parent="menu_cfd_mx"
+            id="menu_regimen"
+            sequence="100" />
+
+        <!-- CATALOGO ADUANAS -->
+        <record id="aduana_view_form" model="ir.ui.view">
+            <field name="name">aduana_view_form</field>
+            <field name="model">cfd_mx.aduana</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Catálogo Aduanas">
+                    <group colspan="4">
+                        <field name="clave"/>
+                        <field name="name"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record id="aduana_view_tree" model="ir.ui.view">
+            <field name="name">aduana_view_tree</field>
+            <field name="model">cfd_mx.aduana</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Catálogo Aduanas">
+                    <field name="clave"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="aduana_view_filter" model="ir.ui.view">
+            <field name="name">aduana_view.search</field>
+            <field name="model">cfd_mx.aduana</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Catálogo Aduanas">
+                    <group>
+                        <field name="name" string="Name" filter_domain="['|',('clave','ilike',self),('name','ilike',self)]"/>
+                        <field name="clave"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="action_aduana" model="ir.actions.act_window">
+            <field name="name">Catálogo Aduanas</field>
+            <field name="res_model">cfd_mx.aduana</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem
+            action="action_aduana" 
+            parent="menu_cfd_mx"
+            id="menu_aduana"
+            sequence="100" />
+
+    </data>
+</openerp>

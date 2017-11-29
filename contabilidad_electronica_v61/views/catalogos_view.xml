@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_company_cfdi_form" model="ir.ui.view">
+            <field name="name">view.company.cfdi.form</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="Conta. Elect." name="ce">
+                        <group string="Contabilidad Electronica">
+                            <field name="conta_elect_version" />
+                        </group>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+
+
+        <!-- Menú configuración -->
+        <menuitem 
+            id="menu_configuracion_contabilidad_electronica" 
+            name="Contabilidad Electronica"
+            parent="account.menu_finance_configuration"/>
+
+
+        <!-- Tabla Codigo Agrupador -->
+        <record id="view_codigo_agrupador_form" model="ir.ui.view">
+            <field name="name">view.codigo.agrupador.form</field>
+            <field name="model">contabilidad_electronica_codigo_agrupador</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Codigo agrupador">
+                    <separator string="Contabilidad electronica" colspan="4"  />
+                    <group colspan="4" >
+                        <field name="name" colspan="4" />
+                    </group>
+                    <separator string="Descripcion" colspan="4"  />
+                    <field name="description" nolabel="1" colspan="4" />
+                </form>
+            </field>
+        </record>
+        <record id="view_codigo_agrupador_tree" model="ir.ui.view">
+            <field name="name">view.codigo.agrupador.tree</field>
+            <field name="model">contabilidad_electronica_codigo_agrupador</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Codigo agrupador">
+                    <field name="name"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+        <record id="action_open_codigo_agrupador_tree" model="ir.actions.act_window">
+            <field name="name">Codigo agrupador</field>
+            <field name="res_model">contabilidad_electronica_codigo_agrupador</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_codigo_agrupador_tree"/>
+        </record>
+        <menuitem action="action_open_codigo_agrupador_tree" id="menu_open_codigo_agrupador" parent="menu_configuracion_contabilidad_electronica"/>
+
+
+        <!-- Tabla naturaleza cuenta -->
+        <record id="view_naturaleza_form" model="ir.ui.view">
+            <field name="name">view.naturaleza.form</field>
+            <field name="model">contabilidad_electronica_naturaleza</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Naturaleza">
+                    <separator string="Contabilidad electrónica" colspan="4"  />
+                    <group colspan="4" >
+                        <field name="name" colspan="4" />
+                    </group>
+                    <separator string="Codigo" colspan="4"  />
+                    <field name="code" nolabel="1" colspan="4" />
+                </form>
+            </field>
+        </record>
+        <record id="view_naturaleza_tree" model="ir.ui.view">
+            <field name="name">view.naturaleza.tree</field>
+            <field name="model">contabilidad_electronica_naturaleza</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Naturaleza">
+                    <field name="name"/>
+                    <field name="code"/>
+                </tree>
+            </field>
+        </record>
+        <record id="action_open_naturaleza_tree" model="ir.actions.act_window">
+            <field name="name">Naturaleza</field>
+            <field name="res_model">contabilidad_electronica_naturaleza</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_naturaleza_tree"/>
+        </record>
+        <menuitem action="action_open_naturaleza_tree" id="menu_open_naturaleza" parent="menu_configuracion_contabilidad_electronica"/>
+
+
+        <!-- Tabla metodo de pago -->
+        <record id="metodopago_view_form" model="ir.ui.view">
+            <field name="name">metodopago.view.form</field>
+            <field name="model">contabilidad.electronica.metodo.pago</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Metodo de Pago">
+                    <field name="name"/>
+                    <field name="code"/>
+                </form>
+            </field>
+        </record>
+        <record id="metodopago_view_tree" model="ir.ui.view">
+            <field name="name">metodopago.view.tree</field>
+            <field name="model">contabilidad.electronica.metodo.pago</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Metodo de Pago" editable="bottom">
+                    <field name="name"/>
+                    <field name="code"/>
+                </tree>
+            </field>
+        </record>
+        <record id="act_open_metodopago" model="ir.actions.act_window">
+            <field name="name">Metodos de pago</field>
+            <field name="res_model">contabilidad.electronica.metodo.pago</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="metodopago_view_tree"/>
+        </record>
+        <menuitem action="act_open_metodopago" id="menu_open_metodopago"
+            parent="menu_configuracion_contabilidad_electronica" sequence="3"/> 
+
+
+        <!-- Tabla Bancos -->
+        <record id="view_res_bank_form_sat" model="ir.ui.view">
+            <field name="name">res.bank.form.sat</field>
+            <field name="model">res.bank</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="base.view_res_bank_form"/>
+            <field name="arch" type="xml">
+                <form position="inside" >
+                    <newline />
+                    <separator string="Contabilidad electrónica" colspan="4"  />
+                    <field name="code_sat" colspan="2" select="1" />
+                    <field name="extranjero" colspan="2"/>
+                    <separator string="Razon Social" colspan="4"  />                    
+                    <field name="razon_social" nolabel="1" colspan="4"  />
+                    
+                </form>
+            </field>
+        </record>
+        <record id="view_res_bank_tree_sat" model="ir.ui.view">
+            <field name="name">res.bank.tree.sat</field>
+            <field name="model">res.bank</field>
+            <field name="type">tree</field>
+            <field name="inherit_id" ref="base.view_res_bank_tree"/>
+            <field name="arch" type="xml">
+                <field name="name"  position="after" >
+                    <field name="code_sat"/>
+                    <field name="razon_social"/>
+                    <field name="extranjero"/>
+                </field>
+            </field>
+        </record>
+        <record id="action_open_res_bank_sat_tree" model="ir.actions.act_window">
+            <field name="name">Banco</field>
+            <field name="res_model">res.bank</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_res_bank_tree_sat"/>
+        </record>
+        <menuitem action="action_open_res_bank_sat_tree" id="menu_open_res_bank_sat" parent="menu_configuracion_contabilidad_electronica"/>
+
+
+    </data>
+</openerp>
