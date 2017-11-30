@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    
+        <record id="validar_factura_config_view_form" model="ir.ui.view">
+            <field name="name">validar.factura.config.view.form</field>
+            <field name="model">validar_factura.config</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Configuracion" >
+                    <field name="partner_id"/>
+                    <field name="validar_oc"/>
+                    <field name="validar_tc"/>
+                    <field name="validar_remision"/>
+                </form>
+            </field>
+        </record>
+
+        <record id="validar_factura_config_view_tree" model="ir.ui.view">
+            <field name="name">validar.factura.config.view.tree</field>
+            <field name="model">validar_factura.config</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Configuracion" editable="bottom">
+                    <field name="partner_id"/>
+                    <field name="validar_oc"/>
+                    <field name="validar_tc"/>
+                    <field name="validar_remision"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="act_validar_factura_config" model="ir.actions.act_window">
+            <field name="name">Configuracion Validar Factura</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">validar_factura.config</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="validar_factura_config_view_tree"/>
+        </record>
+
+        <menuitem
+            parent="account.menu_finance_configuration"
+            name="Configuracion Validar Factura"
+            action="act_validar_factura_config" 
+            id="menu_validar_factura_config"
+            
+            />
+
+
+
+        
+    </data>
+</openerp>
+

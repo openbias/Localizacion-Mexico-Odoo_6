@@ -53,17 +53,14 @@
                             <separator string="Cadena SAT" colspan="4" />
                             <field name="cadena" readonly="1" nolabel="1" colspan="4" />
                         </group>
-<!--                         <group colspan="4">
-                            <separator string="Sello SAT" colspan="4" />
-                            <field name="sello_sat" readonly="1" nolabel="1" colspan="4" />
-                        </group> -->
-                        <group colspan="4" col="8">
+                        <group colspan="4">
                             <separator string="Certificado" colspan="4" />
-                            <separator string="Certificado SAT" colspan="4" />
                             <field name="certificate" readonly="1" nolabel="1" colspan="4" />
+                        </group>
+                        <group colspan="4">
+                            <separator string="Certificado SAT" colspan="4" />
                             <field name="certificado_sat" readonly="1" nolabel="1" colspan="4" />
                         </group>
-
                     </page>
                 </xpath>
 

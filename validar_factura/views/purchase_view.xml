@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="view_purchase_order_factura_subida">
+            <field name="name">view.purchase.order.factura.subida</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <field name="company_id" position="after" >
+                    <field name="factura_subida" invisible="1"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</openerp>

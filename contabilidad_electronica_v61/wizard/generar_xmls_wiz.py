@@ -230,7 +230,7 @@ class wizard_generar_xmls(osv.osv_memory):
         if context is None:
             context = {}
         this = self.browse(cr, uid, ids[0])
-        vce = this.company_id.conta_elect_version or '1_1'
+        vce = this.company_id.conta_elect_version or '1_3'
         data = {
             'mes': this.mes.name.split("/")[0],
             'ano': this.mes.fiscalyear_id.name,
@@ -338,7 +338,7 @@ class wizard_generar_xmls(osv.osv_memory):
 
     def action_xml_balanza(self, cr, uid, ids, context=None):
         this = self.browse(cr, uid, ids[0])
-        vce = this.company_id.conta_elect_version or '1_1'
+        vce = this.company_id.conta_elect_version or '1_3'
         rfc = self.validate_rfc(this.company_id.partner_id.vat)
         data = {
             'mes': this.mes.name.split("/")[0],
@@ -434,7 +434,7 @@ class wizard_generar_xmls(osv.osv_memory):
 
     def action_xml_polizas(self, cr, uid, ids, context=None):
         this = self.browse(cr, uid, ids[0])
-        vce = this.company_id.conta_elect_version or '1_1'
+        vce = this.company_id.conta_elect_version or '1_3'
         rfc = self.validate_rfc(this.company_id.partner_id.vat)
         data = {
             'mes': this.mes.name.split("/")[0],
@@ -593,7 +593,7 @@ class wizard_generar_xmls(osv.osv_memory):
         code_cheque = model_data.get_object(cr, uid, "contabilidad_electronica_v61", "metodo_pago_2").code
         code_transferencia = model_data.get_object(cr, uid, "contabilidad_electronica_v61", "metodo_pago_3").code
         this = self.browse(cr, uid, ids[0])
-        vce = this.company_id.conta_elect_version or '1_1'
+        vce = this.company_id.conta_elect_version or '1_3'
         data = {
             'mes': this.mes.name.split("/")[0],
             'ano': this.mes.fiscalyear_id.name,
@@ -693,7 +693,7 @@ class wizard_generar_xmls(osv.osv_memory):
 
     def action_xml_aux_cuentas(self, cr, uid, ids, context=None):
         this = self.browse(cr, uid, ids[0])
-        vce = this.company_id.conta_elect_version or '1_1'
+        vce = this.company_id.conta_elect_version or '1_3'
         if not this.tipo_solicitud:
             raise osv.except_osv("Error", "Favor de indicar el tipo de solicitud")
 

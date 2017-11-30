@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        
+        <record id="grupo_remision" model="res.groups">
+            <field name="name">Poder elegir validar productos remision</field>
+        </record>
+
+        <record id="validar_factura_subir_wizard" model="ir.ui.view">
+            <field name="name">subir.wizard</field>
+            <field name="model">validar_factura.subir</field>
+            <field name="arch" type="xml">
+                <form string="Subir archivos">
+                    <group  attrs="{'invisible':[('codigo','!=',False)]}" colspan="4" >
+                        <field name="xml" colspan="4" />
+                        <field name="pdf" colspan="4" />
+                        <field name="pdf_evidencia" colspan="4" />
+                    </group>
+                    <group attrs="{'invisible':['|', ('codigo','=',False), ('show_lines','=',True)]}">
+                        <notebook >
+                            <page string="Info. SAT">
+                                <field name="reporte_validation_xml" colspan="4" nolabel="1" readonly="1" />
+                                <group>                                    
+                                    <field name="codigo" readonly="1"/>
+                                    <field name="estado" readonly="1"/>
+                                </group>
+                                <group string="Tipo de cambio" attrs="{'invisible': ['|', ('validar_tc','=',False), ('continue', '=', False)]}">
+                                    <field name="validar_tc" invisible="1"/>
+                                    <label string="Por favor indique la moneda de la factura" />
+                                    <field nolabel="1" name="moneda" attrs="{'required': [('validar_tc','=',True)]}"/>
+                                </group>
+                                <group string="Remisión de entrada" attrs="{'invisible': ['|', ('validar_remision','=',False), ('continue', '=', False)]}">
+                                    <field name="validar_remision" invisible="1"/>
+                                    <label string="Por favor de ser el caso indique la remisión de entrada" />
+                                    <field name="partner_id" invisible="1"/>
+                                    <field name="order_id" invisible="1"/>
+                                    <field name="remision" domain="[('purchase_id','=',order_id), ('partner_id','=',partner_id)]" />
+                                    <field name="validar_productos_remision" groups="validar_factura.grupo_remision"/>
+                                </group>
+                            </page>
+                            <page string="Validacion XML SAT">
+                                <field name="message_validation_xml" colspan="4" nolabel="1" readonly="1" />
+                            </page>
+                        </notebook>
+                    </group>
+                    <field name="validar_oc" invisible="1"/>
+                    <group attrs="{'invisible': ['|', ('show_lines','=',False), ('validar_oc','=',False)]}">
+                        <separator string="Partidas"/>
+                        <field name="show_lines" invisible="1"/>
+                        <field name="lines" readonly="1">
+                            <tree string="Partidas" colors="red:ok==False;green:ok==True">
+                                <field name="clave"/>
+                                <field name="cantidad"/>
+                                <field name="udm"/>
+                                <field name="importe"/>
+                                <field name="cantidad_OC"/>
+                                <field name="udm_OC"/>
+                                <field name="importe_OC"/>
+                                <field name="ok" invisible="1"/>
+                            </tree>
+                        </field>
+                        <group>
+                            <group>
+                                <field name="total" readonly="1" attrs="{'invisible':[('remision','!=',False)]}"/>
+                                <field name="total_OC" readonly="1" attrs="{'invisible':[('remision','!=',False)]}"/>
+                            </group>
+                            <group>
+                                <field name="n" readonly="1"/>
+                                <field name="n_OC" readonly="1"/>
+                            </group>
+                            <group string="Tipo de cambio" attrs="{'invisible': ['|', ('validar_tc','=',False), ('moneda_diferente','=',False)]}">
+                                <field name="moneda_diferente" invisible="1"/>
+                                <group>
+                                    <field name="tc" readonly="1"/>
+                                    <field name="tc_open" readonly="1"/>
+                                </group>
+                            </group>
+                        </group>
+                    </group>
+                    <group attrs="{'invisible': [('show_lines','=',False)]}">
+                        <group>
+                            <field name="everything_ok" invisible="1"/>
+                            <group attrs="{'invisible': [('everything_ok','=',True)]}">
+                                <label colspan="4" string="Su factura ha sido RECHAZADA por los sigiuentes motivos" />
+                                <field name="mensajes_error" readonly="1"/>
+                            </group>
+                            <group attrs="{'invisible': [('everything_ok','=',False)]}">
+                                <label colspan="4" string="Su factura ha sido ACEPTADA" />
+                            </group>
+                        </group>
+                    </group>
+                    <field name="continue" invisible="1" colspan="4" />
+                    <group colspan="2" col="4">                        
+                        <button 
+                            type="object" 
+                            name="action_upload" 
+                            string="Subir archivos" 
+                            icon="gtk-apply" 
+                            attrs="{'invisible':[('codigo','!=',False)]}" />
+                        <button 
+                            type="object" 
+                            name="action_accept" 
+                            string="Crear factura y finalizar" 
+                            icon="gtk-apply" 
+                            attrs="{'invisible':[('everything_ok','=',False)]}" />
+                        <button 
+                            type="object" 
+                            name="action_accept" 
+                            string="Crear factura y finalizar" 
+                            icon="gtk-apply"
+                            attrs="{'invisible':['|',('validar_productos_remision','=',True),('remision','=',False)]}" />
+                        <button 
+                            type="object" 
+                            name="action_continue" 
+                            string="Continuar" 
+                            icon="gtk-apply"
+                            attrs="{'invisible':['|','|',('continue','=',False),('show_lines','=',True),'&amp;',('validar_productos_remision','=', False),('remision','!=',False)]}" />
+                        <button 
+                            type="special" 
+                            special="cancel" 
+                            string="Cancelar" 
+                            icon="gtk-cancel" 
+                            attrs="{'invisible':[('everything_ok','=',True)]}" />
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_subir_xml" model="ir.actions.act_window">
+            <field name="name">Subir archivos</field>
+            <field name="res_model">validar_factura.subir</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="validar_factura_subir_wizard"/>
+            <field name="target">new</field>
+            <field name="multi">True</field>
+            <field name="type">ir.actions.act_window</field>
+        </record>
+
+
+    </data>
+</openerp>

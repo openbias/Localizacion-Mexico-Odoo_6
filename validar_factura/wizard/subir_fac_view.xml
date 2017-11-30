@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="validar_factura_subir_factura" model="ir.ui.view">
+            <field name="name">validar_factura.subir.factura</field>
+            <field name="model">validar_factura.subir.factura</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Subir XML y PDF">
+                    <group attrs="{'invisible':[('codigo','!=',False)]}" colspan="4">
+                        <field name="xml" required="1" colspan="4" />
+                        <field name="pdf" required="1" colspan="4" />
+                        <field name="pdf_evidencia" colspan="4" />
+                    </group>
+                    <field name="show_lines" invisible="1"/>
+                    <group colspan="4" col="4" attrs="{'invisible':['|',('codigo','=',False),('show_lines','=',True)]}">
+                        <notebook >
+                            <page string="Info. SAT">
+                                <field name="continue" invisible="1"/>
+                                <field name="reporte_validation_xml" colspan="4" nolabel="1" readonly="1" width="250" height="250" />
+                                <group colspan="4" >
+                                    <field name="codigo" readonly="1" colspan="4" />
+                                </group>
+                                <group colspan="2" >
+                                    <field name="estado" readonly="1" colspan="2" />
+                                    <field name="validar_partidas" colspan="2" />
+                                </group>                                
+                                <group colspan="2" attrs="{'invisible':[('continue','=',False)]}">
+                                    <button type="object" 
+                                            name="action_validar" 
+                                            string="Comparar partidas" icon="gtk-execute"
+                                            attrs="{'invisible':[('validar_partidas','=',False)]}" colspan="4"/>
+                                </group>
+                            </page>
+                            <page string="Validacion XML SAT">
+                                <field name="message_validation_xml" colspan="4" nolabel="1" readonly="1" />
+                            </page>
+                        </notebook>
+                    </group>
+                    <group attrs="{'invisible':[('show_lines','=',False)]}" colspan="4" col="4">
+                        <field name="lines" readonly="1" colspan="4" nolabel="1">
+                            <tree string="Partidas" colors="red:ok==False;green:ok==True">
+                                <field name="clave"/>
+                                <field name="cantidad"/>
+                                <field name="udm"/>
+                                <field name="importe"/>
+                                <field name="cantidad_fac"/>
+                                <field name="udm_fac"/>
+                                <field name="importe_fac"/>
+                                <field name="ok" invisible="1"/>
+                            </tree>
+                        </field>
+                        <group colspan="4">
+                            <field name="total_xml" readonly="1"/>
+                            <field name="total_fac" readonly="1"/>
+                        </group>
+                        <group colspan="4">
+                            <separator string="Mensajes" colspan="4" />
+                            <field name="mensajes" readonly="1" colspan="4" nolabel="1" />
+                            <field name="all_ok" invisible="1"/>
+                            <button type="object" name="action_accept" string="Terminar validación" icon="gtk-apply"
+                                attrs="{'invisible':[('all_ok','=',False)]}"/>
+                        </group>
+                    </group>
+                    <group colspan="4" col="4">
+                        <group colspan="2" >
+                            <button type="special" special="cancel" string="Cancelar" icon="gtk-cancel" colspan="2" />
+                        </group>
+                        <group colspan="2" >
+                            <button type="object" name="action_upload" string="Subir archivos" colspan="2" 
+                                        attrs="{'invisible':[('codigo','!=',False)]}" />
+                            <button type="object" name="action_accept" string="Terminar validación" colspan="2" icon="gtk-apply"
+                                        attrs="{'invisible':[('validar_partidas','!=',False)]}"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="validar_factura_subir_factura1" model="ir.ui.view">
+            <field name="name">validar_factura.subir.factura1</field>
+            <field name="model">validar_factura.subir.factura</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Subir XML y PDF">
+                    <field name="codigo"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_validar_factura_subir_factura" model="ir.actions.act_window">
+            <field name="name">Subir XML y PDF</field>
+            <field name="res_model">validar_factura.subir.factura</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="validar_factura_subir_factura"/>
+            <field name="target">new</field>
+            <field name="multi">True</field>
+            <field name="type">ir.actions.act_window</field>
+        </record>
+
+
+    </data>
+</openerp>

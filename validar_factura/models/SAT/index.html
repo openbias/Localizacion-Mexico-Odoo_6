@@ -1,0 +1,516 @@
+<script language="javascript">
+<!--
+writeCookie();
+
+function writeCookie()
+{
+ var today = new Date();
+ var the_date = new Date("December 31, 2023");
+ var the_cookie_date = the_date.toGMTString();
+ var the_cookie = "resolution_width="+screen.width+";expires=" + the_cookie_date;
+ document.cookie=the_cookie
+ location = 'xsl.php';
+}
+//-->
+</script>
+<html>
+<head>
+<title>Comprobantes Fiscales Digitales Factura Eletronica</title>
+<link rel="STYLESHEET" href="/fortiz/fortiz.css" media="screen" type="text/css">
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-425709-1";
+urchinTracker();
+</script>
+</head>
+<body>
+<h1 align=center>Comprobantes Fiscales Digitales<br>Factura Eletronica</h1>
+<table width=100% border=0>
+<td width=50%>
+Contenido/contents:<br>
+<a href="#intro">Introducion</a><br>
+<a href="#legal">Marco Legal</a><br>
+<a href="#proceso">Proceso</a><br>
+<a href="#generacion">Generacion</a><br>
+<a href="#codigo">Codigo Fuente</a><br>
+<a href="#envio">Envio</a><br>
+<a href="#validacion">Validacion</a><br>
+<a href="#xslt">XSLT</a><br>
+<td valign=top align=right>
+<a href="..">Pagina principal/Home page </a>
+</table>
+<hr>
+<center>
+<a name="intro">
+<table width=100% border=1>
+<tr><th colspan=2>Introduccion</th></tr>
+<tr><td width=50%>Para los no Mexicanos les comento que el <a href="http://www.sat.gob.mx/sitio_internet/transparencia/51_910.html">SAT</a> surgio en el a&ntilde;o
+    1997 como un organo desconcentrado de la Secreteria de Hacienda y Credito Publico 
+    (<a href="http://www.shcp.gob.mx">SHCP</a>) y dentro de sus funciones esta la recaudacion de los impuestos.
+<td class=en width=50%>
+<tr><td>Como informatico he visto con agrado que han impulsado la modernizacion de sus operaciones, incluso mas
+    me agrado ver que muchos de sus desarrollos los hacen con JAVA por lo cual cada vez mas nos permite
+    a los causantes no tener una maquina Windows para calcular los impuestos.
+<td class=en>
+<tr><td>Uno de los proyectos mas importantes en los que estan trabajando es la reglamentacion de los
+    <a href="http://www.sat.gob.mx/sitio_internet/e_sat/comprobantes_fiscales/">Comprobantes Fiscales Digitales</a>.
+<td class=en>
+<tr><td>El SAT comenta que tomaron como base la experiencia Chilena pero no conozco los antecedentes,
+<td class=en>
+</table>
+<a name="legal">
+<table width=100% border=1>
+<tr><th colspan=2>Marco Legal</a></th></tr>
+<tr><td>Al dia de hoy (Abril 2005), las empresas o via sus Camaras de Comercio siguen pidiendo adecuaciones y reformas a la
+    reglamentacion para reducir la cantidad de controles e informes a los que estan obligados los contribuyentes
+    para expedir y hasta para recibir las facturas electronicas.
+<td class=en>
+</tr>
+<tr><td width=50%>Yo no intento explicar la problematica para cumplir con la reglamentacion, solo les comento que en esta
+    <a href="http://www.sat.gob.mx/sitio_internet/e_sat/comprobantes_fiscales/15_2846.html">pagina</a> estan las
+    leyes de: Código Fiscal de la Federación, Reglas de Resolución Miscelánea Fiscal, Anexo 20 de la Resolución 
+    Miscelánea Fiscal y Código de Comercio.
+<td class=en width=50%>
+</tr>
+<tr><td>Una cosa que si les puedo comentar es que una de dos, o capacitan a sus contadores / auditores para que entiendan 
+ XML, certificados y firmas o ustedes como gente de sistemas (o ah, perdon, lo estan leyendo contadores?) tendran que
+ saber de contabilidad y un poco de fiscal.
+<td class=en width=50%
+</tr> 
+<tr><td>Les puedo asegurar que si algun dato viene mal sera culpa de ustedes y no del contador, aunque les hayan 
+ pedido que lo validen y lo revisen y ellos en sus 'pruebas selectivas' lo hayan dado por bueno, si al paso del tiempo 
+ algo esta mal es culpa de sistemas no del usuario (que novedad verdad?).
+<td class=en width=50%
+</tr>
+</table>
+<a name="proceso">
+<table width=100% border=1>
+<tr><th colspan=2>Procedimiento</a></th></tr>
+<tr><td width=50%>A continuacion detallo un poco los pasos a seguir para implantar el uso de factura electronica en
+ una empresa.
+<td class=en width=50%
+</tr>
+<tr><td><ol type="A">
+    <li>Previos con el SAT:
+    <ol type="1">
+      <li>Obtener la FEA. Esa la tienen que obtener necesariamente el representante legal de la empresa en persona en
+      las oficinas del SAT.
+      <li>Obtener rangos de folios pasra las series a emplear. Es por internet.
+      <li>Obtener certificados de sello digital. Tambien se obtienen por internet, la idea es que puedes solicitar
+      un certificado por localdidad, pero tambien puede ser uno solo para todas las ubicaciones.
+    </ol>
+    <li>Previos en tu sistema ERP (o minimo sistema de contabiliadd y cuentas por cobrar/facturacion).
+    <ol type="1">
+      <li>Tener los campos en tu archivo maestro de clientes requeridos en el formato. Numero exterior/interior 
+        separado de la calle.
+      <li>Depurar los RFCs, existan con homoclave y uso de RFCs genericos para venta al publico en general y para
+          ventas al extranjero.
+      <li>Tener los campos de tiemestamp al segundo para el registro 'al segundo' de las facturas.
+    </ol>
+      <li>Previos con tu personal.
+      <ol type="1">
+       <li>Hacer del conocimiento de las areas afectadas, distribucion, logistica, credito y cobraznas, ventas el
+       nuevo documento a utilizar.
+       <li>Decidir si se imprime una copia en papel para la entrega o uso de remision o carta porte.
+       <li>Decidir si el ciclo de cobranza requiere papel.
+       <li>Decidir si solo factura electronica o tambien notas de credito electronicas o demas comprobantes 
+       fiscales digitales.
+       </ol>
+       </ol>
+<td class=en width=50%
+</tr>
+<tr><td><ol type="1">Generacion de la Factura Electronica
+    <li>Para garantizar la 'simultaneidad' (que no existe en sistemas), primero se graba el asiento contable y despues
+    en base a el se genera el archivo XML.
+    <li>Generar cadena original en base a los datos del ERP.
+    <li>Convertirla la cadena original a UTF-8.
+    <li>Calcular el MD5 de la cadena original.
+    <li>En base a la llave privada y su contrase&ntilde;a calcular el sello del MD5.
+    <li>Convertir el sello obtenido (que esta en binario) a formato base64.
+    <li>Generar el XML con los campos del XML agregando el sello recien calculado.
+    <li>Agregarle la Addenda requerida por el socio comercial.
+    </ol>
+<td class=en width=50%
+</tr>
+<tr><td><ol type="1">Almacenamiento de los comprobantes.
+    <li>Guardar los archivos XML generados en un medio que te permita:
+       <ol type="i">
+           <li>Asegurar su integridad fisica por 5-10 a&ntilde;os.
+           <li>Tener un sistema 'agil' de consulta de esa informacion para uso de los empleados de la empresa y de las
+       autoridades.
+       </ol>
+  </ol>
+<td class=en width=50%
+</tr>
+<tr><td><ul >Envio/Distribucion de la informacion
+     <li>Envio por AS2.
+     <li>Envio por VAN/EDI.
+     <li>Envio por FTP.
+     <li> Y claro la impresion y envio por papel como siempre se habia venido haciendo.
+  </ul>
+<td class=en width=50%
+</tr>
+<tr><td><ol type="1">Controles mensuales
+  <li>Informe al SAT de los folios utilizados. Via internet.
+  <li>Diario de ventas.
+  <li>Estados de cuentad e cliente.
+  </ol>
+<td class=en width=50%
+</tr>
+</table>
+<a name="generacion">
+<table width=100% border=1>
+<tr><th colspan=2>Generacion de la factura Electronica</a></th></tr>
+<tr><td width=50%>Antes de entrar con los detalles de como se genera una factura electronica les voy a presentar el 
+    resultado final. Ojo esta formatedada a varios renglones para verla mas claramente, el formato del Anexo 20
+    indica que no hay que dejar saltos de linea en el archivo.
+<td class=en width=50%>
+</tr>
+<tr><td colspan=2 class=user><pre>
+<br />
+<b>Notice</b>:  Undefined variable: ancho in <b>/home/httpd/www/fortiz/sat/index.php</b> on line <b>191</b><br />
+<div style='height:300px; width:px; overflow:auto'><div class="hl-main"><table class="hl-table" width="100%"><tr><td class="hl-gutter" align="right" valign="top"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+</pre></td><td class="hl-main" valign="top"><pre><span class="hl-brackets">&lt;</span><span class="hl-reserved">Comprobante</span><span class="hl-code"> </span><span class="hl-var">anoAprobacion</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">2006</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+             </span><span class="hl-var">certificado</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">MIIEeTCCA2GgAwIBAgIUMDAwMDEwMDAwMDAwMDA4MjM3NDcwDQYJKoZIhvcNAQEFBQAwggGKMS8wLQYDVQQKDCZTZXJ2aWNpbyBkZSBBZG1pbmlzdHJhY2nDs24gVHJpYnV0YXJpYTE4MDYGA1UECwwvQWRtaW5pc3RyYWNpw7NuIGRlIFNlZ3VyaWRhZCBkZSBsYSBJbmZvcm1hY2nDs24xODA2BgNVBAMML0EuQy4gZGVsIFNlcnZpY2lvIGRlIEFkbWluaXN0cmFjacOzbiBUcmlidXRhcmlhMSYwJAYDVQQQEx1Bdi4gSGlkYWxnbyA3NywgQ29sLiBHdWVycmVybzEOMAwGA1UEERMFMDYzMDAxEjAQBgNVBAcMCUNveW9hY8OhbjEZMBcGA1UECBMQRGlzdHJpdG8gRmVkZXJhbDELMAkGA1UEBhMCTVgxFTATBgNVBC0TDFNBVDk3MDcwMU5OMzEhMB8GCSqGSIb3DQEJARYSYXNpc25ldEBzYXQuZ29iLm14MTUwMwYJKoZIhvcNAQkCEyZSZXNwb25zYWJsZTogQ2VzYXIgTHVpcyBQZXJhbGVzIFRlbGxlejAeFw0wNjA5MDgxMzQwMjFaFw0wODA5MDcxMzQwMjFaMIHFMSUwIwYDVQQtExxGSkM3ODAzMTVFOTEgLyBBRUJSNDIwMTE5Mk44MR4wHAYDVQQFExUgLyBBRUJSNDIwMTE5SERGTlJEMDkxIjAgBgNVBAoTGUZBQiBKQUJPTiBDT1JPTkEgU0EgREUgQ1YxEDAOBgNVBAsTB2dlbmVyYWwxIjAgBgNVBAMTGUZBQiBKQUJPTiBDT1JPTkEgU0EgREUgQ1YxIjAgBgNVBCkTGUZBQiBKQUJPTiBDT1JPTkEgU0EgREUgQ1YwgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBAOx6usU1zIZTEKYRVxfZBUjvQcB9sVtLgrgAGDDL6K3vpExpl6/Q8g+fT+UTlLveg7JVheQamsQTZhMTUGnny4OTGpfdSn5SPnvCchBqq7gEGXi26jjwOrs3PO0mSIa6VweMCPPKFQ56RYaJ18kpiNgWUdl9yivh/SO5godmWZOpAgMBAAGjHTAbMAwGA1UdEwEB/wQCMAAwCwYDVR0PBAQDAgbAMA0GCSqGSIb3DQEBBQUAA4IBAQDDAzYjTyHcYXjPzXIPfUtHizC8G/XjeOvcdScS/rsxHVbbusuKpAS8hK5hjT00GXKjB5u7NEkNEOJiOgZl08mk5FKuKqqXUbGB35atKdDMEMhN56RMbYump9tJJ8JQlbvuMywiL2J3GpO9wSdZ044Z37Szv5bE3/G8oM4/kz7rhsOrsVAFwodfIvHYDZmRQlYqPV5B7X8AzhUmehJ8rg3faJfjQLhVRgsCt27HCLIzLXYKRPSLNg0X1mxi745Ailxwk7nO7HIEN7coXdaMbkczFD4Fhe9aaskyj9mMwo/XASLiQb5PlBqE2uLQITUUbU5w4P32wlZGMqX4XxA3zG+h</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+             </span><span class="hl-var">descuento</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">0</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+             </span><span class="hl-var">fecha</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">2006-11-20T08:50:48</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+             </span><span class="hl-var">folio</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">051661</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+             </span><span class="hl-var">formaDePago</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">EL PAGO DE ESTA FACTURA (CONTRAPRESTACION) SE EFECTUARA EN UNA SOLA EXHIBICION, SI POR ALGUNA RAZON NO FUERA ASI, EMITIREMOS LOS COMPROBANTES DE LAS PARCIALIDADES RESPECTIVAS</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+             </span><span class="hl-var">noAprobacion</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">2951</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+             </span><span class="hl-var">noCertificado</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">00001000000000823747</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+             </span><span class="hl-var">sello</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">wVLpmRWPFxC6UzitqsdZkljtcYA8ESYPg21Tx0P3p8EAvmIUOSb8OqDw0d+RPswU2BTN77rzygmOvS5O3L6kv4q8u9Yg04b1CjOUbo+YggrJgxUsG3ymMOl4eh/JQ1utNzwJk44ZBeTnWldT4Hm5V5ThKW5yXlc/udV61PnSzIo=</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+             </span><span class="hl-var">serie</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">FAXA</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+             </span><span class="hl-var">subTotal</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">43824.69</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+             </span><span class="hl-var">tipoDeComprobante</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">ingreso</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+             </span><span class="hl-var">total</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">50398.39</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+             </span><span class="hl-var">version</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">2.0</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+             </span><span class="hl-var">xmlns</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">http://www.sat.gob.mx/cfd/2</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+             </span><span class="hl-var">xmlns:xsi</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">http://www.w3.org/2001/XMLSchema-instance</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+             </span><span class="hl-var">xsi:schemaLocation</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">http://www.sat.gob.mx/cfd/2 http://www.sat.gob.mx/sitio_internet/cfd/2/cfdv2.xsd</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+    </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">Emisor</span><span class="hl-code"> </span><span class="hl-var">nombre</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">FABRICA DE JABON LA CORONA, S.A. DE C.V.</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+            </span><span class="hl-var">rfc</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">FJC780315E91</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+        </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">DomicilioFiscal</span><span class="hl-code"> </span><span class="hl-var">calle</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">CARLOS B. ZETINA</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                         </span><span class="hl-var">codigoPostal</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">55348</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                         </span><span class="hl-var">colonia</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">INDUSTRIAL XALOSTOC</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                         </span><span class="hl-var">estado</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">MEXICO</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                         </span><span class="hl-var">localidad</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">ECATEPEC DE MORELOS</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                         </span><span class="hl-var">municipio</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">ECATEPEC</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                         </span><span class="hl-var">noExterior</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">80</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                         </span><span class="hl-var">pais</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">MEXICO</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-brackets">/&gt;</span><span class="hl-code">
+        </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">ExpedidoEn</span><span class="hl-code"> </span><span class="hl-var">calle</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">CARLOS B.ZETINA NO.80</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                    </span><span class="hl-var">codigoPostal</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">55348</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                    </span><span class="hl-var">estado</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">EDO. DE MEXICO</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                    </span><span class="hl-var">localidad</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">XALOSTOC, EDO. DE MEXICO</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                    </span><span class="hl-var">municipio</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">XALOSTOC, EDO. DE MEXICO</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                    </span><span class="hl-var">pais</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">MEXICO</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-brackets">/&gt;</span><span class="hl-code">
+    </span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">Emisor</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+    </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">Receptor</span><span class="hl-code"> </span><span class="hl-var">nombre</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">NUEVA WAL-MART DE MEXICO SRL DE CV</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+              </span><span class="hl-var">rfc</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">NWM9709244W4</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+        </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">Domicilio</span><span class="hl-code"> </span><span class="hl-var">calle</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">NEXTENGO</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                   </span><span class="hl-var">codigoPostal</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">2770</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                   </span><span class="hl-var">colonia</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">STA. CRUZ ACAYUCAN</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                   </span><span class="hl-var">estado</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">DISTRITO FEDERAL</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                   </span><span class="hl-var">localidad</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">AZCAPOTZALCO</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                   </span><span class="hl-var">municipio</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">AZCAPOTZALCO</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                   </span><span class="hl-var">noExterior</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">78</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                   </span><span class="hl-var">pais</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">MEXICO</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-brackets">/&gt;</span><span class="hl-code">
+    </span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">Receptor</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+    </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">Conceptos</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+        </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">Concepto</span><span class="hl-code"> </span><span class="hl-var">cantidad</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">22</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                  </span><span class="hl-var">descripcion</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">TEPEYAC 25P 400 G C/ENV</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                  </span><span class="hl-var">importe</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">2441.34</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                  </span><span class="hl-var">valorUnitario</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">110.97</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-brackets">/&gt;</span><span class="hl-code">
+        </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">Concepto</span><span class="hl-code"> </span><span class="hl-var">cantidad</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">11</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                  </span><span class="hl-var">descripcion</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">ZOTE AZUL 25P 400 G.</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                  </span><span class="hl-var">importe</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">1220.67</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                  </span><span class="hl-var">valorUnitario</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">110.97</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-brackets">/&gt;</span><span class="hl-code">
+        </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">Concepto</span><span class="hl-code"> </span><span class="hl-var">cantidad</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">22</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                  </span><span class="hl-var">descripcion</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">ZOTE BCO. 25P 400 G</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                  </span><span class="hl-var">importe</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">2441.34</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                  </span><span class="hl-var">valorUnitario</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">110.97</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-brackets">/&gt;</span><span class="hl-code">
+        </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">Concepto</span><span class="hl-code"> </span><span class="hl-var">cantidad</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">7</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                  </span><span class="hl-var">descripcion</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">ZOTE BCO. 50P 200 G</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                  </span><span class="hl-var">importe</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">776.79</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                  </span><span class="hl-var">valorUnitario</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">110.97</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-brackets">/&gt;</span><span class="hl-code">
+        </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">Concepto</span><span class="hl-code"> </span><span class="hl-var">cantidad</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">44</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                  </span><span class="hl-var">descripcion</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">ZOTE ROSA 25P 400 G</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                  </span><span class="hl-var">importe</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">4882.68</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                  </span><span class="hl-var">valorUnitario</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">110.97</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-brackets">/&gt;</span><span class="hl-code">
+        </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">Concepto</span><span class="hl-code"> </span><span class="hl-var">cantidad</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">6</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                  </span><span class="hl-var">descripcion</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">ZOTE ROSA 50P 200 G</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                  </span><span class="hl-var">importe</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">665.82</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                  </span><span class="hl-var">valorUnitario</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">110.97</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-brackets">/&gt;</span><span class="hl-code">
+        </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">Concepto</span><span class="hl-code"> </span><span class="hl-var">cantidad</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">12</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                  </span><span class="hl-var">descripcion</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">ROMA 4P 5 KGS</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                  </span><span class="hl-var">importe</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">2620.08</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                  </span><span class="hl-var">valorUnitario</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">218.34</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-brackets">/&gt;</span><span class="hl-code">
+        </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">Concepto</span><span class="hl-code"> </span><span class="hl-var">cantidad</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">24</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                  </span><span class="hl-var">descripcion</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">ROMA 10P 2 KGS</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                  </span><span class="hl-var">importe</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">5273.64</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                  </span><span class="hl-var">valorUnitario</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">219.74</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-brackets">/&gt;</span><span class="hl-code">
+        </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">Concepto</span><span class="hl-code"> </span><span class="hl-var">cantidad</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">120</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                  </span><span class="hl-var">descripcion</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">ROMA 10P 1 KG</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                  </span><span class="hl-var">importe</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">13354.20</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                  </span><span class="hl-var">valorUnitario</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">111.29</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-brackets">/&gt;</span><span class="hl-code">
+        </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">Concepto</span><span class="hl-code"> </span><span class="hl-var">cantidad</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">12</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                  </span><span class="hl-var">descripcion</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">FOCA 10P 2 KGS</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                  </span><span class="hl-var">importe</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">2806.38</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                  </span><span class="hl-var">valorUnitario</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">233.87</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-brackets">/&gt;</span><span class="hl-code">
+        </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">Concepto</span><span class="hl-code"> </span><span class="hl-var">cantidad</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">10</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                  </span><span class="hl-var">descripcion</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">BLANCA NIEVES 10P 2 KGS</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                  </span><span class="hl-var">importe</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">2014.65</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                  </span><span class="hl-var">valorUnitario</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">201.47</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-brackets">/&gt;</span><span class="hl-code">
+        </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">Concepto</span><span class="hl-code"> </span><span class="hl-var">cantidad</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">40</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                  </span><span class="hl-var">descripcion</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">BLANCA NIEVES 10P 1 KG</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                  </span><span class="hl-var">importe</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">4086.00</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                  </span><span class="hl-var">valorUnitario</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">102.15</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-brackets">/&gt;</span><span class="hl-code">
+        </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">Concepto</span><span class="hl-code"> </span><span class="hl-var">cantidad</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">5</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                  </span><span class="hl-var">descripcion</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">BRILOZA 10P 1 KG</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                  </span><span class="hl-var">importe</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">510.75</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                  </span><span class="hl-var">valorUnitario</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">102.15</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-brackets">/&gt;</span><span class="hl-code">
+        </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">Concepto</span><span class="hl-code"> </span><span class="hl-var">cantidad</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">6</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                  </span><span class="hl-var">descripcion</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">FOCA 12B 1LT</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                  </span><span class="hl-var">importe</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">730.35</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                  </span><span class="hl-var">valorUnitario</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">121.73</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-brackets">/&gt;</span><span class="hl-code">
+    </span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">Conceptos</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+    </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">Impuestos</span><span class="hl-code"> </span><span class="hl-var">totalImpuestosTrasladados</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">6573.70</span><span class="hl-quotes">&quot;</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+        </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">Traslados</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+            </span><span class="hl-brackets">&lt;</span><span class="hl-reserved">Traslado</span><span class="hl-code"> </span><span class="hl-var">importe</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">6573.70</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                      </span><span class="hl-var">impuesto</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">IVA</span><span class="hl-quotes">&quot;</span><span class="hl-code">
+                      </span><span class="hl-var">tasa</span><span class="hl-code">=</span><span class="hl-quotes">&quot;</span><span class="hl-string">15.00</span><span class="hl-quotes">&quot;</span><span class="hl-code"> </span><span class="hl-brackets">/&gt;</span><span class="hl-code">
+        </span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">Traslados</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+    </span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">Impuestos</span><span class="hl-brackets">&gt;</span><span class="hl-code">
+</span><span class="hl-brackets">&lt;/</span><span class="hl-reserved">Comprobante</span><span class="hl-brackets">&gt;</span></pre></td></tr></table></div></div> </tr>
+</pre>
+</tr>
+<tr><td>Lo primero que les puede llamar la atencion es el texto que esta dentro de las etiquetas Addenda, aqui
+    incluyo la misma factura pero en formato EDI. Esto es un requisito no fiscal a nivel comercial que algunos 
+    clientes le piden a sus proveedores, en este caso Wal-Mart de Mexico.
+<td class=en>
+</tr>
+<tr><td>La informacion contenida en la Addenda no esta reglamentada por el SAT y puede contener la informacion que a
+    las partes (Proveedor-Cliente) les convenga,
+<td class=en>
+</tr>
+<tr><td>Ahora si vamos a la generacion, el primer paso es que la factura debe de estar <em>ya</em> registrada en el sistema
+    contable (ERP, CXC, etc.) antes de emitir el comprobante, uno de los datos del comprobante es el 'timestamp' o
+    fecha-hora-minuto-segundo en que se registro el movimiento.
+<td class=en>
+</tr>
+<tr><td>El primer paso es tomar los datos ya asentados en el ERP y en base a ellos generar el formato requerido.
+<td class=en>
+</tr>
+<tr><td>Ya existen varios programas comerciales para generar el codigo EDI, es mas, ya muchos usuarios generaban las
+    facturas EDI a nivel comercial antes de que el SAT reglamentara las facturas electronicas, por lo que voy
+    a considerar que ustedes ya tienen un procedimiento o programa que les genera el archivo EDI en base a la
+    informacion contenida en su ERP. Como ejemplo les muestro <a href="genera.php">un programa</a> que lee
+    mi ERP y genera el formato EDIFACT D01B INVOIC de la factura.
+<td class=en>
+</tr>
+<tr><td>Ademas se ejecuta un programa que lee los datos de la factura del ERP y en base a ellos se 
+    <a href="arreglo.php">'genera'</a> un arreglo asociativo que en un paso posterior se convertira a XML.
+<td class=en>
+</tr>
+<tr><td>Posteriormente este arreglo asociativo lo <a href="xml.php">convierto</a> a XML con los requisitos fiscales
+    validos. Mi justificacion para hacerlo en dos partes es que no solo genero 'Factura Electronica' tambien genero
+    'Nota de credito electronica' y 'Comprobante de pago en parcialidades electronico' entonces tengo un programa
+    que le las tablas correpondientes del ERP para cada tipo de documento (factura, nota, comprobante) y cada uno
+    genera el arreglo asociativo en el mismo formato.
+<td class=en>
+</tr>
+</table>
+<a name="codigo">
+<table width=100% border=1>
+<tr><th colspan=2>Codigo Fuente</a></th></tr>
+<tr><td>En esta <a href=codigo.php>pagina</a> tengo a detalle los programas PHP que uso para generar la factura electronica.
+<td class=en>
+</tr>
+<tr><td width=50%>Tambien menciono las utilerias para usar otros lenguajes de programacion basados en windows como visual 
+Basic o C#.
+<td class=en>
+</tr>
+</table>
+<a name="envio">
+<table width=100% border=1>
+<tr><th colspan=2>Envio de la Factura</a></th></tr>
+<tr><td width=50%>Una vez generada la factura fiscal hay que hacerla llegar al socio comercial (Cliente) y aqui
+    tambien es por el medio mutuamente acordado.
+<td class=en width=50%>
+</tr>
+<tr><td>WalMart pide que se envie por AS2, que es un medio via Internet de comunicacion segura y cifrada, segun el
+    software que empleen es la manera de enviarlos, pero usando el software de 
+    <a href="http://www.isoft.com/commerce_suite.php">iSoft</a> es tan sencillo como copiar el archivo XML al
+    buzon de salida asignado al 'Partner' Wal-mart.
+<td class=en>
+</tr>
+<tr><td>Tambien pueden pedir que se envie por la VAN de EDI, y en ese caso hay que usar el metodo usual proporcionado
+    por el proveedor. En el caso del software <a href="http://www.sterlingcommerce.com/Products/AllProducts/Gentran/index.html">Gentran</a> de Sterling Commerce tengo un archivo BAT de windows que concatena los datos del buzon y lo manda por modem.
+<td class=en>
+</tr>
+<tr><td>Ademas esta la opcion de enviarlo en papel! Si, aunque sea electronica se puede hacer una impresion del
+    comprobante Fiscal Digital y seguir el flujo administrativo normal en papel como siempre. Estoy evaluando 
+    <a href="http://mx.php.net/manual/en/ref.xsl.php">XSLT</a> para transformar la factura XML en un formato
+    agrabadable al humano ya que lo tenga listo aqui nos vemos ;) .
+<td class=en>
+</tr>
+</table>
+<a name="validacion">
+<table width=100% border=1>
+<tr><th colspan=2>Validacion de las facturas electronicas</a></th></tr>
+<tr><td width=50%>Ademas del uso de la herramienta <a href="http://www.xmlmind.com/xvalid.html">xsdvalid</a> para verificar
+que la estructura del documento XML cumpla con las especificaciones del SAT que uso en esta <a href=xsl.php>pagina</a>.
+<td class=en width=50%>
+</tr>
+<tr><td>Tambien hay que hacer una validacion de vigencia de los folios y certificados recibidos. En esta pagina del 
+ <a href="http://www.sat.gob.mx/sitio_internet/e_sat/comprobantes_fiscales/15_6554.html">SAT</a> esta la lista de 
+ obligaciones que deben de cumplir tantos los que expiden como los que reciben los comprobants fiscales digitales.
+<td class=en>
+</tr>
+<tr><td>Es de espeical interes esta <a href="http://www.sat.gob.mx/sitio_internet/e_sat/comprobantes_fiscales/15_6550.html">pagina</a> donde dicen que <em>usted puede consultar la validez de los folios y series de sus Comprobantes Fiscales Digitales (CFD) recibidos </em> se puede usar su pagina para consultar la validez, solo hay un <b>peque&ntilde;o</b> problema.
+<td class=en>
+</tr>
+<tr><td>Si recibes una o dos facturas al dia, pues bueno, entras y tecleas a mano esa informacion en su pagina y te dice
+ si el folio, serie, certificado esta vigente. Pero que ocurre si te llegan cientos de facturas al dia como por ejemplo
+ Walmart, Soriana o alguna otra empresa que 'exiga' que le manden las facturas electronicas por computadora.
+<td class=en>
+</tr>
+<tr><td>Se supone que el SAT ofrecio un webservice para que la computadora pudiera validar contra el SAT cada factura
+ recibida, pero hasta la fecha sigue en pruebas y lo unico que liberaron fue la opciones de descargar en tu
+ computadora dos archivos de texto plano para que los integres en tu sistema y tu puedas validar esa informacion.
+<td class=en>
+</tr>
+<tr><td>En esta <a href=valida.php>pagina</a> tengo un ejemplo de uso de esos archivos planos <em>para validar los folios
+ serie y certificado de sellos de cada RFC</em>..
+<td class=en>
+</tr>
+</table>
+<a name="xslt">
+<table width=100% border=1>
+<tr><th colspan=2>Transformando el XML con XSLT</a></th></tr>
+<tr><td width=50%>La idea del formato XML es que la informacion este en un formato de comunicacion para que cada
+    quien la pueda usar obteniendo los datos que necesite.
+<td class=en width=50%>
+</tr>
+<tr><td width=50%>La herramienta <a href="http://xmlsoft.org/XSLT/">XSLT</a> nos permite convertir archivos XML a varios 
+    formatos, texto, HTML o a otros XML.
+<td class=en width=50%>
+</tr>
+<tr><td width=50%>En esta <a href="xsl.php">pagina</a> muestro unos ejemplos de lo que que podido hacer en modo batch
+        o comandos de shell para conevrtir el archivo XML sin usar el lenguaje PHP.
+    <td class=en width=50%>
+</tr>
+</table>
+</center>
+</body>
+</html>

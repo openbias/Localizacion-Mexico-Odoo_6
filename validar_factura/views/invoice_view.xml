@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="invoice_supplier_uuid_subir_form">
+            <field name="name">invoice.supplier.form.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+                <field name="date_invoice" position="before">
+                    <newline />
+                    <field name="creada_de_xml" invisible="1" />
+                    <field name="supplier_invoice_number" />
+                    <field name="uuid" readonly="0" />
+                    <button 
+                        name="%(action_validar_factura_subir_factura)d" 
+                        string="Subir XML y PDF" 
+                        type="action"
+                        states="draft,proforma2"
+                        colspan="2"
+                        groups="account.group_account_invoice"
+                        />
+                </field>
+            </field>
+        </record>
+
+    </data>
+</openerp>

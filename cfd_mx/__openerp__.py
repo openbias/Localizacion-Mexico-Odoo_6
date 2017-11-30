@@ -6,6 +6,7 @@
     'category' : 'Accounting & Finance',
     'description': '',
     'depends' : [
+        'report_webkit',
         'bias_electronic_invoice_v6'
     ],
     'init_xml': [

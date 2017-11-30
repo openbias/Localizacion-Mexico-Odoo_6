@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    
+        <record model="ir.ui.view" id="crear_fac_wizard_form">
+            <field name="name">importar.cot.wizard.form</field>
+            <field name="model">validar_factura.crear.fac</field>
+            <field name="arch" type="xml">
+                <form string="Crear Factura" >
+                    <group attrs="{'invisible':[('codigo','!=',False)]}" colspan="4" col="4">
+                        <field name="company_id" invisible="1" colspan="4" />
+                        <field name="xml" colspan="4" />
+                        <field name="pdf" colspan="4" />
+                        <field name="pdf_valida" colspan="4" />
+                    </group>
+                    <group attrs="{'invisible':[('codigo','=',False)]}">
+                        <notebook >
+                            <page string="Info. SAT" >
+                                <field name="reporte_validation_xml" colspan="4" nolabel="1" readonly="1" height="250"/>
+                                <group colspan="4" col="4" >                                    
+                                    <field name="codigo" readonly="1"/>
+                                    <field name="estado" readonly="1"/>
+                                    <field name="ok" invisible="1"/>
+                                </group>
+                                <group >
+                                    <field name="moneda" attrs="{'required':[('codigo','!=',False)]}"/>
+                                    <field name="product_id" attrs="{'required':[('codigo','!=',False)]}"/>
+                                </group>
+                            </page>
+                            <page string="Validacion XML SAT">
+                                <field name="message_validation_xml" colspan="4" nolabel="1" readonly="1" />
+                            </page>
+                        </notebook>
+                    </group>
+                    <group colspan="4" col="4">
+                        <button type="special" special="cancel" string="Close" icon="gtk-cancel"/>
+                        <button name="action_subir" type="object" string="Subir archivos"
+                            attrs="{'invisible':[('codigo','!=',False)]}"/>
+                        <button type="object" name="action_procesar" string="Aceptar" icon="gtk-ok"
+                            attrs="{'invisible':[('ok','=',False)]}"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+    
+        <record id="action_crear_fac" model="ir.actions.act_window">
+            <field name="name">Crear factura desde CFDI</field>
+            <field name="res_model">validar_factura.crear.fac</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="crear_fac_wizard_form"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem action="action_crear_fac" id="menu_open_crear_fac"
+            parent="account.menu_finance_payables" sequence="2"/>
+        
+    </data>
+</openerp>
