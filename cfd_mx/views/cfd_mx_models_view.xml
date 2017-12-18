@@ -416,5 +416,95 @@
             id="menu_aduana"
             sequence="100" />
 
+
+        <!-- Codigo Postal -->
+        <record id="cp_view_form" model="ir.ui.view">
+            <field name="name">cp_view_form</field>
+            <field name="model">res.country.state.cp</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Catálogo Codigo Postal">
+                    <group colspan="4">
+                        <field name="name"/>
+                        <field name="state_id"/>
+                        <field name="municipio_id"/>
+                        <field name="ciudad_id"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record id="cp_view_tree" model="ir.ui.view">
+            <field name="name">cp_view_tree</field>
+            <field name="model">res.country.state.cp</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Catálogo Codigo Postal">
+                    <field name="name"/>
+                    <field name="state_id"/>
+                    <field name="municipio_id"/>
+                    <field name="ciudad_id"/>
+                </tree>
+            </field>
+        </record>
+        <record id="cp_view_filter" model="ir.ui.view">
+            <field name="name">cp_view.search</field>
+            <field name="model">res.country.state.cp</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Catálogo Codigo Postal">
+                    <group>
+                        <field name="name" string="C.P." />
+                        <field name="municipio_id"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="action_cp" model="ir.actions.act_window">
+            <field name="name">Catálogo Codigo Postal</field>
+            <field name="res_model">res.country.state.cp</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem
+            action="action_cp" 
+            parent="menu_cfd_mx"
+            id="menu_cp"
+            sequence="100" />
+
+
+
+        <record id="alta_catalogos_cfdi_view" model="ir.ui.view">
+             <field name="name">Alta Catalogos CFDI</field>
+             <field name="model">cfd_mx.alta.catalogos.wizard</field>
+             <field name="type">form</field>
+             <field name="arch" type="xml">
+                <form string="Alta Catalogos CFDI">
+                    <separator string="Alta Catalogos CFDI" colspan="4"/>
+                    <newline/>
+                    <separator string ="" colspan="4"/>
+                    <group colspan="2" col="4">
+                         <button special="cancel" string="Cancel" icon="gtk-cancel"/>
+                        <button name="action_alta_catalogos" string="Aceptar" type="object" icon="terp-stock_effects-object-colorize"/>
+                     </group>
+                </form>
+             </field>
+         </record>
+        <record id="action_alta_catalogos_cfdi" model="ir.actions.act_window">
+             <field name="name">Alta Catalogos CFDI</field>
+             <field name="res_model">cfd_mx.alta.catalogos.wizard</field>
+             <field name="type">ir.actions.act_window</field>
+             <field name="view_type">form</field>
+             <field name="view_mode">tree,form</field>
+             <field name="view_id" ref="alta_catalogos_cfdi_view"/>
+             <field name="context">{}</field>
+             <field name="target">new</field>
+       </record>
+        <menuitem
+            icon="STOCK_EXECUTE"
+            name="Alta Catalogos CFDI"
+            action="action_alta_catalogos_cfdi"
+            id="menu_alta_catalogos_wizard"
+            parent="menu_cfd_mx" />
+
     </data>
 </openerp>

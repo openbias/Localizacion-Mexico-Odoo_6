@@ -486,7 +486,6 @@ class AccountInvoice(osv.osv):
 
     def get_inv_number(self, cr, uid, inv):
         prefix = inv.journal_id.sequence_id.prefix or ''
-        print "prefix", prefix, inv.number, inv.internal_number
         if (prefix) and (inv.number):
             number = int(inv.number[len(prefix):])
         else:
@@ -729,7 +728,7 @@ class AccountInvoice(osv.osv):
                 message += 'Favor de Configurar la Clave Unidad SAT %s \n'%(line.uos_id.name)
             for tax in line.invoice_line_tax_id:
                 if not tax.tax_group_id.cfdi_impuestos:
-                    message += 'El impuesto %s no tiene categoria CFD \n'%()
+                    message += 'El impuesto %s no tiene categoria CFD \n'%(tax.name)
         if message:
             raise osv.except_osv('Error !', message)
         return True
@@ -750,5 +749,6 @@ class AccountInvoice(osv.osv):
             cr.execute("UPDATE account_invoice SET date_invoice_cfdi='%s' WHERE id=%s "%(dtz, obj.id) )
         print 'dtz', dtz
         return dtz
+
 
 AccountInvoice()

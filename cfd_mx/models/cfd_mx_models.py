@@ -1,6 +1,50 @@
 # -*- encoding: utf-8 -*-
 
+import openerp
 from osv import fields, osv
+
+import json, os, inspect
+import logging
+logging.basicConfig(level=logging.INFO)
+
+class AltaCatalogosCFDI(osv.osv_memory):
+    _name = 'cfd_mx.alta.catalogos.wizard'
+    _description = 'Alta Catalogos CFDI'
+
+
+    def action_alta_catalogos(self, cr, uid, ids, context=None):
+        logging.info(' Inicia Alta Catalogos')
+        models = [
+            'cfd_mx.unidadesmedida',
+            'cfd_mx.prodserv',
+            'res.country.state.municipio',
+            'res.country.state.ciudad',
+            'res.country.state.cp'
+        ]
+        for model in models:
+            model_name = model.replace('.', '_')
+            logging.info(' Model: -- %s'%model_name )
+            model_obj = self.pool.get(model)
+            fname = '/../data/json/%s.json' % model
+            current_path = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))        
+            path =  current_path+fname
+            jdatas = json.load(open(path))
+            for indx, data in enumerate(jdatas):
+                header = data.keys()
+                body = data.values()
+                try:
+                    result, rows, warning_msg, dummy = model_obj.import_data(cr, uid, header, [body], mode='update', current_module='cfd_mx', noupdate=True, context=context)
+                    logging.info(' Model: -- %s, Res: %s - %s'%(model_name, indx, result) )
+                    if result < 0:
+                        logging.info(' Model: -- %s, Res: %s - %s'%(model_name, indx, warning_msg) )
+                    cr.commit()
+                except:
+                    pass
+        return {}
+
+
+AltaCatalogosCFDI()
+
 
 class ResBank(osv.osv):
     _inherit = "res.bank"
@@ -124,6 +168,12 @@ class ClaveProdServ(osv.osv):
     _columns = {
         'name': fields.char('Descripcion', size=128),
         'clave': fields.char('Clave', help='Clave del Catálogo del SAT', size=8),
+        'incluir_iva': fields.char(string='Incluir IVA trasladado', size=64),
+        'incluir_ieps': fields.char(string='Incluir IVA trasladado', size=64),
+        'complemento': fields.char("Complemento Incluir", size=64),
+        'from_date': fields.date(string='Fecha Inicial'),
+        'to_date': fields.date(string='Fecha Inicial'),
+        'similares': fields.char("Palabras Similares", size=64),
     }
 
     def name_get(self, cr, uid, ids, context=None):
@@ -149,6 +199,11 @@ class UnidadesMedida(osv.osv):
     _columns = {
         'name': fields.char('Descripcion', size=128),
         'clave': fields.char('Clave', help='Clave del Catálogo del SAT', size=8),
+        'from_date': fields.date("Fecha Inicial"),
+        'to_date': fields.date("Fecha Final"),
+        'descripcion': fields.char("Descripcion", required=False, size=254),
+        'nota': fields.char("Nota", size=254),
+        'simbolo': fields.char("Simbolo", size=254)
     }
 
     def name_get(self, cr, uid, ids, context=None):
