@@ -85,6 +85,39 @@ class AccountInvoiceLine(osv.osv):
         'numero_pedimento_sat': fields.char(string='Numero de Pedimento', size=64, help='Informacion Aduanera. Numero de Pedimento')
     }
 
+    def get_impuestos_sat(self, cr, uid, ids, context=None):
+        res = []
+        for line in self.browse(cr, uid, ids, context=context):
+            tax_obj = self.pool.get('account.tax')
+            dp = self.pool.get('decimal.precision')
+
+            dp_account = dp.precision_get(cr, uid, 'Account')
+            dp_product = dp.precision_get(cr, uid, 'Product Price')
+            price_unit = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
+            taxes = tax_obj.compute_all(cr, uid, line.invoice_line_tax_id, price_unit, line.quantity, product=line.product_id, address_id=line.invoice_id.address_invoice_id, partner=line.invoice_id.partner_id)['taxes']
+            for tax in taxes:
+                tax_id = tax_obj.browse(cr, uid, tax.get('id'), context=context)
+                tax_group = tax_id.tax_group_id
+                importe = tax.get('amount')
+                TasaOCuota = '%.6f'%(round(abs(tax_id.amount), dp_account))
+                base = tax['price_unit'] * line['quantity']
+                impuestos = {
+                    'Name': tax_id.name,
+                    'Base': '%.2f'%(round( base , dp_account)),
+                    'Impuesto': tax_group.cfdi_impuestos,
+                    'TipoFactor': '%s'%(tax_id.cfdi_tipofactor),
+                    'TasaOCuota': '%s'%(TasaOCuota),
+                    'Importe': '%.2f'%(round(abs(importe), dp_account))
+                }
+                if tax_group.cfdi_retencion:
+                    impuestos["tipo"] = "ret"
+                if tax_group.cfdi_traslado:
+                    impuestos["tipo"] = "tras"
+                res.append(impuestos)
+        return res
+
+AccountInvoiceLine()
+
 
 class AccountInvoice(osv.osv):
     _inherit = 'account.invoice'
@@ -164,6 +197,7 @@ class AccountInvoice(osv.osv):
         'certificate': fields.text('Certificate'),
         'certificado_sat': fields.text('Certificado SAT'),
         'cadena' :fields.text('Cadena'),
+        'sello': fields.text('Sello'),
         'sello_sat': fields.text('Sello SAT'),
         'pay_account': fields.char('NumCtaPago', size=64),
     }
@@ -186,6 +220,20 @@ class AccountInvoice(osv.osv):
         'price_discount_sat': 0.0
     }
 
+    def get_impuestos_ret_tras(self, cr, uid, ids, context=None):
+        res = {
+            'ret': 0.0,
+            'tras': 0.0
+        }
+        for inv in self.browse(cr, uid, ids, context=context):
+            for line in inv.invoice_line:
+                for t in line.get_impuestos_sat():
+                    importe = float(t.get('Importe', '0.0'))
+                    if t.get('tipo') == 'ret':
+                        res['ret'] = res['ret'] + importe
+                    if t.get('tipo') == 'tras':
+                        res['tras'] = res['tras'] + importe
+        return res
 
     def copy(self, cr, uid, id, default=None, context=None):
         if default is None:
@@ -693,7 +741,7 @@ class AccountInvoice(osv.osv):
             'bar_code': res.get('qr_img'),
             'mensaje_pac': res.get('Leyenda'),
             'tipo_cambio': res.get('TipoCambio'),
-            'cadena_sat': res.get('cadena_sat'),
+            'cadena': res.get('cadena_sat'),
             'test': res.get('test')
         }
         obj.write(values)
