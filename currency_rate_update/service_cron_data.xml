@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+        <record forcecreate="True" model="ir.cron" id="ir_cron_res_currency_rate_update">
+            <field name="name">Actualizar Tipo de Cambio</field>
+            <field eval="True" name="active"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall"/>
+            <field eval="'res.currency'" name="model"/>
+            <field eval="'run_currency_update'" name="function"/>
+            <field eval="'()'" name="args"/>
+        </record>
+
+
+    </data>
+</openerp>

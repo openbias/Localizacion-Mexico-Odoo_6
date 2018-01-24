@@ -206,7 +206,7 @@
         </table>
         %endif
         <table width="100%" class="company_address">
-            <tr><td colspan="4" ><div class="bg_theme_color">DOCUMENTO RELACIONADO</div></td></tr>
+            <tr><td colspan="4" ><div class="bg_theme_color">TIMBRE FISCAL</div></td></tr>
             <tr>
                 <td class="bg_theme_color" width="10%"><strong>PAC</strong></td>
                 <td class="bg_theme_color" width="40%"><strong>Folios Fiscal</strong></td>
@@ -233,7 +233,7 @@
                 </td>
                 <td width="25%" valign="top" align="top">
                     <div width="100%" class="bg_theme_color">Cadena Original</div>
-                    <span style="font-size:6px; display:block; width:150px; word-wrap:break-word;">${inv.cadena |entity}</span>
+                    <span style="font-size:6px; display:block; width:150px; word-break:break-all;">${inv.cadena |entity}</span>
                 </td>
             </tr>
         </table>

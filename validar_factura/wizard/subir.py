@@ -27,7 +27,7 @@ import xml.etree.ElementTree as ET
 import base64
 import urllib2
 import os
-from soap_hacienda import ConsultaCFDI
+# from soap_hacienda import ConsultaCFDI
 import re
 from datetime import datetime
 
